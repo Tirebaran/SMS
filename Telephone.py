@@ -3,8 +3,15 @@ from tkinter import ttk
 
 class Btn:
     def __init__(self, root, number, alphabet, r, c):
-        self.btn = ttk.Button(root, text=f"{number}\n{alphabet}")
-        self.btn.grid(row=r, column=c, ipadx=6, ipady=6, padx=5, pady=5)
+        if type(alphabet) == list:
+            text=f"{number}\n{" ".join(alphabet)}"
+        else:
+            text=f"{number}\n{alphabet}"
+        self.btn = Button(root, text=text, justify='center', width=75, cursor='draft_large', foreground='white')
+        self.btn["bg"] = "gray25"
+        self.btn["border"] = "0"
+        self.btn.grid(row=r, column=c, ipady= 6, padx=5, pady=5)
+        
         
 
 
@@ -46,6 +53,7 @@ btn_names = ["btn_1", "btn_2", "btn_3", "btn_4", "btn_5", "btn_6", "btn_7", "btn
 root = Tk()
 root.title("NOKIA 3310")
 root.geometry("300x400")
+root["bg"] = "gray"
 root.resizable(False, False)
 root.iconbitmap(default="Telephone_icon.ico")
 root.attributes("-topmost",True)
@@ -54,8 +62,9 @@ root.attributes("-topmost",True)
 for c in range(4): root.columnconfigure(index=c, weight=3)
 for r in range(4): root.rowconfigure(index=r, weight=3)
  
-result = ttk.Entry(justify='right', state='readonly')
+result = Entry(justify='right', background="black", foreground="green", font=('Arial', 16))
 result.grid(row=0, column=0, columnspan=3, ipadx=70, ipady=6, padx=5, pady=5)
+#result.config(state='readonly') 
 
 
 cnt = 0
