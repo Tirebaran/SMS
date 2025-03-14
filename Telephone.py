@@ -52,17 +52,21 @@ root.resizable(False, False)
 root.iconbitmap(default="Telephone_icon.ico")
 root.attributes("-topmost",True)
 
-cnt = 0
-for r in range(1, 5):
-    for c in range(0, 3):
-        btn_names[cnt] = Btn(root, cnt + 1, button_alphabet[str(cnt + 1)], r, c)
-        cnt += 1
 
 for c in range(4): root.columnconfigure(index=c, weight=3)
 for r in range(4): root.rowconfigure(index=r, weight=3)
  
 result = ttk.Entry(justify='right', state='readonly')
 result.grid(row=0, column=0, columnspan=3, ipadx=70, ipady=6, padx=5, pady=5)
+
+
+cnt = 0
+for r in range(1, 5):
+    for c in range(0, 3):
+        btn_names[cnt] = Btn(root, cnt + 1, button_alphabet[str(cnt + 1)], r, c)
+        cnt += 1
+
+
 
 '''' 
 cnt = 1
