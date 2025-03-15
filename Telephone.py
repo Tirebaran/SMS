@@ -4,34 +4,53 @@ from tkinter import ttk
 class Btn:
     def __init__(self, root, number, alphabet, r, c):
         if type(alphabet) == list:
-            text=f"{number}\n{" ".join(alphabet)}"
+            text=f"{number}\n{' '.join(alphabet)}"
+        elif number == 10 or number == 12:
+            text=f"{alphabet}"
+        elif number == 11:
+            text=f"0\n{alphabet}"
         else:
             text=f"{number}\n{alphabet}"
-        self.btn = Button(root, text=text, justify='center', width=75, cursor='draft_large', foreground='white')
+        
+        self.number = number
+        self.btn = Button(root, text=text, justify='center', width=75, cursor='draft_large', foreground='white', command=lambda: self.clicked())
+        if number == 10:
+            self.btn.configure(foreground="lime")
+        elif number == 12:
+            self.btn.configure(foreground="red")
+
         self.btn["bg"] = "gray25"
         self.btn["border"] = "0"
         self.btn.grid(row=r, column=c, ipady= 6, padx=5, pady=5)
-        
-        
+
+    def clicked(self):
+        if 0 <= self.number <= 9 or self.number == 11:
+            if self.number == 11:
+                current_text = result.get()
+                new_text = current_text + "0"
+                result.delete(0, END)
+                result.insert(0, new_text)
+            else:
+                current_text = result.get()
+                new_text = current_text + str(self.number)
+                result.delete(0, END)
+                result.insert(0, new_text)
+        else:
+            if self.number == 10:
+                self.send()
+            else:
+                self.delete()
 
 
+    def send(self):
+        text = result.get()
+        print(text)
+              
+    def delete(self):
+        current_text = result.get()
+        if current_text: result.delete(len(current_text) - 1, END)
 
-def clicked(text):
-    current_text = result.get()
-    new_text = current_text + str(text)
-    result.config(state='normal')
-    result.delete(0, END)
-    result.insert(0, new_text)
-    result.config(state='readonly')
 
-def delete():
-    result.config(state='normal')
-    result.delete(0, END)
-    result.config(state='readonly')
-
-def send():
-    text = result.get()
-    print(text)
 
 button_alphabet = {
     "1": "QUIT",
@@ -62,10 +81,9 @@ root.attributes("-topmost",True)
 for c in range(4): root.columnconfigure(index=c, weight=3)
 for r in range(4): root.rowconfigure(index=r, weight=3)
  
-result = Entry(justify='right', background="black", foreground="green", font=('Arial', 16))
+result = Entry(justify='left', background="black", foreground="green", font=('Arial', 16))
 result.grid(row=0, column=0, columnspan=3, ipadx=70, ipady=6, padx=5, pady=5)
-#result.config(state='readonly') 
-
+ 
 
 cnt = 0
 for r in range(1, 5):
