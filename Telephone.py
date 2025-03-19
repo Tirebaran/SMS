@@ -2,8 +2,9 @@ from tkinter import *
 
 class Btn:
     def __init__(self, root, number, alphabet, r, c):
-        self.click_cnt = 0
         self.alp = alphabet
+        self.number = number
+        
         if type(alphabet) == list:
             text=f"{number}\n{' '.join(alphabet)}"
         elif number in [10, 12]:
@@ -13,7 +14,7 @@ class Btn:
         else:
             text=f"{number}\n{alphabet}"
         
-        self.number = number
+        
         self.btn = Button(root, text=text, justify='center', width=75, cursor='draft_large', foreground='white', command=lambda: self.clicked())
 
         if number == 1:
